@@ -13,6 +13,7 @@ public class PlayerContol : MonoBehaviour
     void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
+        _groundSensor = GetComponentInChildren<GroundSensor>();
     }
 
     void Update()
@@ -28,7 +29,7 @@ public class PlayerContol : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
 
-        if(Input.GetButton("Jump") && _groundSensor.isGrounded == true)
+        if(Input.GetButtonDown("Jump") && _groundSensor.isGrounded == true)
         {
             Jump();
         }
@@ -41,6 +42,6 @@ public class PlayerContol : MonoBehaviour
 
     void Jump()
     {
-        _rigidBody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+        _rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 }
