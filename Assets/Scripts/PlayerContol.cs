@@ -28,10 +28,9 @@ public class PlayerContol : MonoBehaviour
     //Animaciones
     private Animator _animator;
     //Sonidos
-
-    //FootSteps
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _FootSteps;
+    [SerializeField] private AudioClip _footSteps;
+    [SerializeField] private AudioClip _dash;
     private bool _alreadyPlaying = false;
 
     //ATAQUE
@@ -68,9 +67,12 @@ public class PlayerContol : MonoBehaviour
 
         inputHorizontal = Input.GetAxisRaw("Horizontal");
 
-        if(Input.GetButtonDown("Jump") && _groundSensor.isGrounded == true)
+        if (Input.GetButtonDown("Jump"))
         {
-            Jump();
+            if(_groundSensor.isGrounded || _groundSensor.canDoubleJump)
+            {
+                Jump();
+            }
         }
 
         Movement();
@@ -95,11 +97,20 @@ public class PlayerContol : MonoBehaviour
 
     void Jump()
     {
+        if(!_groundSensor.isGrounded)
+        {
+            _groundSensor.canDoubleJump = false;
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, 0);
+            //animacionesDobleSalto
+        }
         _rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        _animator.SetBool("IsJumping", true);
+        //audio
     }
 
     IEnumerator Dash()
     {
+        _audioSource.PlayOneShot(_dash);
         _animator.SetTrigger("IsDashing");
         float gravity = _rigidBody.gravityScale;
         _rigidBody.gravityScale = 0;
@@ -136,24 +147,34 @@ public class PlayerContol : MonoBehaviour
     {
         if(_groundSensor.isGrounded && Input.GetAxisRaw("Horizontal") != 0 && !_alreadyPlaying)
         {
+            //particulas
             _particleTransform.SetParent(gameObject.transform);
+            _particleSystem.Play();
             _particleTransform.localPosition = _particlePosition;
             _particleTransform.rotation = transform.rotation;
+            //audio
+            _audioSource.clip = _footSteps;
+            _audioSource.loop = true;
             _audioSource.Play();
-            _particleSystem.Play();
+            //cosas
             _alreadyPlaying = true;
         }
         else if(!_groundSensor.isGrounded || Input.GetAxisRaw("Horizontal") == 0)
         {
+            //particulas
             _particleTransform.SetParent(null);
-            _audioSource.Stop();
             _particleSystem.Stop();
+            //audio
+            _audioSource.loop = false;
+            _audioSource.Stop();
+            //cosas
             _alreadyPlaying = false;
         }
     }
 
     void NormalAtack()
     {
+        _animator.SetTrigger("IsAttacking");
         Collider2D[] enemies = Physics2D.OverlapCircleAll(_hitBoxPosition.position, _attackRadius, _enemyLayer);
 
         foreach(Collider2D enemy in enemies)

@@ -30826,6 +30826,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrounded: 0
+  canDoubleJump: 0
 --- !u!1 &682351757
 GameObject:
   m_ObjectHideFlags: 0
@@ -62266,13 +62267,14 @@ MonoBehaviour:
   inputHorizontal: 0
   playerSpeed: 4.5
   jumpForce: 8.5
-  _dashForce: 4
+  _dashForce: 8
   _dashDuration: 0.5
   _dashCoolDown: 1
   _audioSource: {fileID: 1217832034}
-  _FootSteps: {fileID: 0}
+  _footSteps: {fileID: 8300000, guid: 9db6c7b8565b5ec48b7e88332e29cb8e, type: 3}
+  _dash: {fileID: 8300000, guid: 5dcc4ef664f608e48b0ccd756f374476, type: 3}
   _attackDamage: 10
-  _attackRadius: 1
+  _attackRadius: 1.5
   _hitBoxPosition: {fileID: 381395840}
   _enemyLayer:
     serializedVersion: 2
@@ -62310,7 +62312,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
