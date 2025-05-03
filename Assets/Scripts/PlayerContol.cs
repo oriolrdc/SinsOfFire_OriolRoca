@@ -38,7 +38,7 @@ public class PlayerContol : MonoBehaviour
     [SerializeField] private float _attackDamage = 10;
     [SerializeField] private float _attackRadius = 1;
     [SerializeField] private Transform _hitBoxPosition;
-    [SerializeField] private Layermask _enemyLayer;
+    [SerializeField] private LayerMask _enemyLayer;
 
     void Awake()
     {
@@ -75,7 +75,7 @@ public class PlayerContol : MonoBehaviour
 
         Movement();
 
-        if(GetButtonDown("Fire2"))
+        if(Input.GetButtonDown("Fire2"))
         {
             NormalAtack();
         }
@@ -152,22 +152,20 @@ public class PlayerContol : MonoBehaviour
         }
     }
 
-    void NormalAtack();
+    void NormalAtack()
     {
-        
         Collider2D[] enemies = Physics2D.OverlapCircleAll(_hitBoxPosition.position, _attackRadius, _enemyLayer);
 
         foreach(Collider2D enemy in enemies)
         {
-            /*Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemyScript.TakeDamage(_attackDamage);*/
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            enemyScript.TakeDamage(_attackDamage);
         }
     }
 
     void OnDrawGizmos()
     {
-        Gizmos.Color = Color.red;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_hitBoxPosition.position, _attackRadius);
     }
-    
 }
