@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     //CUCHILLO
     [SerializeField] private PolygonCollider2D _triggerCuchillo;
     [SerializeField] private PlayerContol _playerControl;
+    [SerializeField] private float _cuchilloDamage = 4;
 
     void Awake()
     {
@@ -55,7 +56,7 @@ public class Enemy : MonoBehaviour
     {
         if(collider.gameObject.CompareTag("Player"))
         {
-            _playerControl.Death();
+            _playerControl.TakeDamage(_cuchilloDamage);
         }
     }
 

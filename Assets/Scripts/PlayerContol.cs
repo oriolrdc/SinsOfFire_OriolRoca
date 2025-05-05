@@ -43,7 +43,11 @@ public class PlayerContol : MonoBehaviour
     private bool _canShoot = true;
     [SerializeField] private Transform _fireBallSpawn;
     [SerializeField] private GameObject _fireBallPrefab;
-    [SerializeField] private AudioClip _fireBallSFX;
+    public AudioClip _fireBallSFX;
+
+    //VIDA
+    [SerializeField] private float _currentHealth;
+    [SerializeField] private float _maxHealth = 20;
 
     void Awake()
     {
@@ -54,6 +58,11 @@ public class PlayerContol : MonoBehaviour
         _particleTransform = _particleSystem.transform;
         _particlePosition = _particleTransform.localPosition;
         
+    }
+
+    void Start()
+    {
+        _currentHealth = _maxHealth;
     }
 
     void Update()
@@ -198,7 +207,17 @@ public class PlayerContol : MonoBehaviour
     void FireBall()
     {
         Instantiate(_fireBallPrefab, _fireBallSpawn.position, _fireBallSpawn.rotation);
-        _audioSource.PlayOneShot(_fireBallSFX);
+        _animator.SetTrigger("Shooting");
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _currentHealth -= damage;
+        
+        if(_currentHealth <= 0)
+        {
+            Death();
+        }
     }
 
     public void Death()
