@@ -1,20 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    //SPRITES
+    [SerializeField] SpriteRenderer _spriteRenderer;
     //MOVIMIENTO
     private Rigidbody2D _rigidBody;
     private BoxCollider2D _boxCollider;
     [SerializeField] private int _driection = 1;
     [SerializeField] private float _enemySpeed = 2;
     [SerializeField] private int _actualDirection = 1;
-
     //VIDA
     [SerializeField] private float _currentHealth;
     [SerializeField] private float _maxHealth = 5;
-
+    [SerializeField] private Slider _healthBar;
     //CUCHILLO
     [SerializeField] private PolygonCollider2D _triggerCuchillo;
     [SerializeField] private PlayerContol _playerControl;
@@ -26,11 +28,14 @@ public class Enemy : MonoBehaviour
         _boxCollider = GetComponent<BoxCollider2D>();
         _triggerCuchillo = GetComponent<PolygonCollider2D>();
         _playerControl = GameObject.Find("personaje").GetComponent<PlayerContol>();
+        _healthBar = GetComponentInChildren<Slider>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Start()
     {
         _currentHealth = _maxHealth;
+        _healthBar.maxValue = _maxHealth;
     }
 
     void FixedUpdate()
@@ -71,21 +76,27 @@ public class Enemy : MonoBehaviour
         _driection = 0;
     }
 
-    public void Death()
-    {
-        _driection = 0;
-        _rigidBody.gravityScale = 0;
-        _boxCollider.enabled = false;
-        Destroy(gameObject, 2f);
-    }
-
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
+
+        _healthBar.value = _currentHealth;
 
         if(_currentHealth <= 0)
         {
             Death();
         }
     }
+
+    public void Death()
+    {
+        _driection = 0;
+        _rigidBody.gravityScale = 0;
+        _boxCollider.enabled = false;
+        _triggerCuchillo.enabled = false;
+        _spriteRenderer.enabled = false;
+        Destroy(gameObject, 2f);
+    }
+
+    
 }

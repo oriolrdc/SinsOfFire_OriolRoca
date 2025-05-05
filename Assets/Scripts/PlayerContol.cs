@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerContol : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class PlayerContol : MonoBehaviour
 
     //Animaciones
     private Animator _animator;
+    //SFX
+    
     //Sonidos
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _footStepsSFX;
@@ -38,6 +41,7 @@ public class PlayerContol : MonoBehaviour
     [SerializeField] private float _attackRadius = 1;
     [SerializeField] private Transform _hitBoxPosition;
     [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private AudioClip _slash;
 
     //AMERICAN
     private bool _canShoot = true;
@@ -48,6 +52,8 @@ public class PlayerContol : MonoBehaviour
     //VIDA
     [SerializeField] private float _currentHealth;
     [SerializeField] private float _maxHealth = 20;
+    [SerializeField] private Slider _healthBar;
+    [SerializeField] private AudioClip _damage;
 
     void Awake()
     {
@@ -57,12 +63,14 @@ public class PlayerContol : MonoBehaviour
         _particleSystem = GetComponentInChildren<ParticleSystem>();
         _particleTransform = _particleSystem.transform;
         _particlePosition = _particleTransform.localPosition;
+        _healthBar = GameObject.Find("PlayerHealth").GetComponent<Slider>();
         
     }
 
     void Start()
     {
         _currentHealth = _maxHealth;
+        _healthBar.maxValue = _maxHealth;
     }
 
     void Update()
@@ -213,7 +221,9 @@ public class PlayerContol : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
-        
+        _healthBar.value = _currentHealth;
+        _audioSource.PlayOneShot(_damage);
+
         if(_currentHealth <= 0)
         {
             Death();

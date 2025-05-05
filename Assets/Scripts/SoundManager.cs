@@ -5,10 +5,10 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     private AudioSource _audioSource;
-    [SerializeField] AudioClip _BGM;
-    [SerializeField] AudioClip _GameOver;
+    [SerializeField] private AudioClip _BGM;
+    [SerializeField] private AudioClip _GameOver;
 
-    void awake()
+    void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
     }
