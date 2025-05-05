@@ -29,8 +29,8 @@ public class PlayerContol : MonoBehaviour
     private Animator _animator;
     //Sonidos
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _footSteps;
-    [SerializeField] private AudioClip _dash;
+    [SerializeField] private AudioClip _footStepsSFX;
+    [SerializeField] private AudioClip _dashSFX;
     private bool _alreadyPlaying = false;
 
     //ATAQUE
@@ -38,6 +38,12 @@ public class PlayerContol : MonoBehaviour
     [SerializeField] private float _attackRadius = 1;
     [SerializeField] private Transform _hitBoxPosition;
     [SerializeField] private LayerMask _enemyLayer;
+
+    //AMERICAN
+    private bool _canShoot = true;
+    [SerializeField] private Transform _fireBallSpawn;
+    [SerializeField] private GameObject _fireBallPrefab;
+    [SerializeField] private AudioClip _fireBallSFX;
 
     void Awake()
     {
@@ -77,6 +83,11 @@ public class PlayerContol : MonoBehaviour
 
         Movement();
 
+        if(Input.GetButtonDown("Fire1") && _canShoot)
+        {
+            FireBall();
+        }
+
         if(Input.GetButtonDown("Fire2"))
         {
             NormalAtack();
@@ -110,7 +121,7 @@ public class PlayerContol : MonoBehaviour
 
     IEnumerator Dash()
     {
-        _audioSource.PlayOneShot(_dash);
+        _audioSource.PlayOneShot(_dashSFX);
         _animator.SetTrigger("IsDashing");
         float gravity = _rigidBody.gravityScale;
         _rigidBody.gravityScale = 0;
@@ -153,7 +164,7 @@ public class PlayerContol : MonoBehaviour
             _particleTransform.localPosition = _particlePosition;
             _particleTransform.rotation = transform.rotation;
             //audio
-            _audioSource.clip = _footSteps;
+            _audioSource.clip = _footStepsSFX;
             _audioSource.loop = true;
             _audioSource.Play();
             //cosas
@@ -182,6 +193,17 @@ public class PlayerContol : MonoBehaviour
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             enemyScript.TakeDamage(_attackDamage);
         }
+    }
+
+    void FireBall()
+    {
+        Instantiate(_fireBallPrefab, _fireBallSpawn.position, _fireBallSpawn.rotation);
+        _audioSource.PlayOneShot(_fireBallSFX);
+    }
+
+    public void Death()
+    {
+        Destroy(gameObject);
     }
 
     void OnDrawGizmos()

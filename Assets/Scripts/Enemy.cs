@@ -15,21 +15,21 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _currentHealth;
     [SerializeField] private float _maxHealth = 5;
 
+    //CUCHILLO
+    [SerializeField] private PolygonCollider2D _triggerCuchillo;
+    [SerializeField] private PlayerContol _playerControl;
 
     void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
+        _triggerCuchillo = GetComponent<PolygonCollider2D>();
+        _playerControl = GameObject.Find("personaje").GetComponent<PlayerContol>();
     }
 
     void Start()
     {
         _currentHealth = _maxHealth;
-    }
-
-    void Update()
-    {
-        
     }
 
     void FixedUpdate()
@@ -48,6 +48,14 @@ public class Enemy : MonoBehaviour
         {
             _driection *= -1;
             transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.gameObject.CompareTag("Player"))
+        {
+            _playerControl.Death();
         }
     }
 
