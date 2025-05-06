@@ -7,53 +7,54 @@ public class PlayerContol : MonoBehaviour
 {
     //Movimiento
     private Rigidbody2D _rigidBody;
+    [SerializeField] private BoxCollider2D _boxCollider;
     public float inputHorizontal;
     public float playerSpeed = 4.5f;
-    
     //Salto
     private GroundSensor _groundSensor;
     public float jumpForce = 10;
-    
+    [SerializeField] private AudioClip _jumpSFX;
     //Dash
     [SerializeField] private float _dashForce = 20;
     [SerializeField] private float _dashDuration = 2f;
     [SerializeField] private float _dashCoolDown = 1;
     private bool _canDash = true;
     private bool _isDahsing = false;
-
     //Particulas
     private ParticleSystem _particleSystem;
     private Transform _particleTransform;
     private Vector3 _particlePosition;
-
     //Animaciones
     private Animator _animator;
     //SFX
-    
+    [SerializeField] private AudioSource _SFXSource;
+    [SerializeField] private AudioClip _gameOverSFX;
     //Sonidos
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _footStepsSFX;
     [SerializeField] private AudioClip _dashSFX;
     private bool _alreadyPlaying = false;
-
     //ATAQUE
     [SerializeField] private float _attackDamage = 10;
     [SerializeField] private float _attackRadius = 1;
     [SerializeField] private Transform _hitBoxPosition;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private AudioClip _slash;
-
     //AMERICAN
     private bool _canShoot = true;
     [SerializeField] private Transform _fireBallSpawn;
     [SerializeField] private GameObject _fireBallPrefab;
     public AudioClip _fireBallSFX;
-
     //VIDA
     [SerializeField] private float _currentHealth;
     [SerializeField] private float _maxHealth = 20;
     [SerializeField] private Slider _healthBar;
     [SerializeField] private AudioClip _damage;
+    //MANAGERS
+    [SerializeField] private SoundManager _soundManager;
+
+    public Cofres _chests;
+    public bool _IsChestHere;
 
     void Awake()
     {
@@ -64,6 +65,8 @@ public class PlayerContol : MonoBehaviour
         _particleTransform = _particleSystem.transform;
         _particlePosition = _particleTransform.localPosition;
         _healthBar = GameObject.Find("PlayerHealth").GetComponent<Slider>();
+        _soundManager = GameObject.Find("BGM Manager").GetComponent<SoundManager>();
+        _chests = GameObject.Find("cofre").GetComponent<Cofres>();
         
     }
 
@@ -94,6 +97,7 @@ public class PlayerContol : MonoBehaviour
         {
             if(_groundSensor.isGrounded || _groundSensor.canDoubleJump)
             {
+                _SFXSource.PlayOneShot(_jumpSFX);
                 Jump();
             }
         }
@@ -111,7 +115,26 @@ public class PlayerContol : MonoBehaviour
         }
 
         FootStepsSound();
+
+        if(Input.GetButtonDown("Submit") && _IsChestHere)
+        {
+            _chests.OpenChest();
+        }
     }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.gameObject.layer == 9)
+        {
+            _IsChestHere = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        _IsChestHere = false;
+    }
+    
 
     void FixedUpdate() 
     {
@@ -138,7 +161,7 @@ public class PlayerContol : MonoBehaviour
 
     IEnumerator Dash()
     {
-        _audioSource.PlayOneShot(_dashSFX);
+        _SFXSource.PlayOneShot(_dashSFX);
         _animator.SetTrigger("IsDashing");
         float gravity = _rigidBody.gravityScale;
         _rigidBody.gravityScale = 0;
@@ -204,6 +227,7 @@ public class PlayerContol : MonoBehaviour
     {
         _animator.SetTrigger("IsAttacking");
         Collider2D[] enemies = Physics2D.OverlapCircleAll(_hitBoxPosition.position, _attackRadius, _enemyLayer);
+        _SFXSource.PlayOneShot(_slash);
 
         foreach(Collider2D enemy in enemies)
         {
@@ -216,13 +240,14 @@ public class PlayerContol : MonoBehaviour
     {
         Instantiate(_fireBallPrefab, _fireBallSpawn.position, _fireBallSpawn.rotation);
         _animator.SetTrigger("Shooting");
+        _SFXSource.PlayOneShot(_fireBallSFX);
     }
 
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
         _healthBar.value = _currentHealth;
-        _audioSource.PlayOneShot(_damage);
+        _SFXSource.PlayOneShot(_damage);
 
         if(_currentHealth <= 0)
         {
@@ -232,7 +257,14 @@ public class PlayerContol : MonoBehaviour
 
     public void Death()
     {
-        Destroy(gameObject);
+        _rigidBody.gravityScale = 0;
+        _boxCollider.enabled = false;
+        Destroy(_groundSensor.gameObject);
+        inputHorizontal = 0;
+        _audioSource.Stop();
+        _SFXSource.PlayOneShot(_gameOverSFX);
+        _soundManager.GameOver();
+        Destroy(gameObject, 5f);
     }
 
     void OnDrawGizmos()

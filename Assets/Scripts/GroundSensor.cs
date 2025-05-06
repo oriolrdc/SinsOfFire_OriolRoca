@@ -6,6 +6,12 @@ public class GroundSensor : MonoBehaviour
 {
     public bool isGrounded;
     public bool canDoubleJump = true;
+    private PlayerContol _playerControl;
+
+    void Awake()
+    {
+        _playerControl = GetComponentInParent<PlayerContol>();
+    }
 
     void OnTriggerEnter2D(Collider2D collider) 
     {
@@ -13,6 +19,11 @@ public class GroundSensor : MonoBehaviour
         {
             isGrounded = true;
             canDoubleJump = true;
+        }
+
+        if(collider.gameObject.layer == 7)
+        {
+            _playerControl.Death();
         }
     }
 

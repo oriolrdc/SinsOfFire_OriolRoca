@@ -29,4 +29,9 @@ public class SoundManager : MonoBehaviour
     {
         _audioSource.Pause();
     }
+
+    public void GameOver()
+    {
+        _audioSource.Pause();
+    }
 }
