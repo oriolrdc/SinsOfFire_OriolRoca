@@ -6,15 +6,17 @@ using UnityEngine.UI;
 public class PlayerContol : MonoBehaviour
 {
     //Movimiento
-    private Rigidbody2D _rigidBody;
+    [Header("Movimiento")]
     [SerializeField] private BoxCollider2D _boxCollider;
+    private Rigidbody2D _rigidBody;
     public float inputHorizontal;
     public float playerSpeed = 4.5f;
     //Salto
     private GroundSensor _groundSensor;
     public float jumpForce = 10;
-    [SerializeField] private AudioClip _jumpSFX;
+    
     //Dash
+    [Header("Dash")]
     [SerializeField] private float _dashForce = 20;
     [SerializeField] private float _dashDuration = 2f;
     [SerializeField] private float _dashCoolDown = 1;
@@ -30,27 +32,41 @@ public class PlayerContol : MonoBehaviour
     [SerializeField] private AudioSource _SFXSource;
     [SerializeField] private AudioClip _gameOverSFX;
     //Sonidos
+    [Header("Sonidos")]
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _footStepsSFX;
     [SerializeField] private AudioClip _dashSFX;
+    [SerializeField] private AudioClip _jumpSFX;
     private bool _alreadyPlaying = false;
     //ATAQUE
+    [Header("Ataque")]
     [SerializeField] private float _attackDamage = 10;
     [SerializeField] private float _attackRadius = 1;
     [SerializeField] private Transform _hitBoxPosition;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private AudioClip _slash;
     //AMERICAN
-    private bool _canShoot = true;
+    [Header("Disparo")]
     [SerializeField] private Transform _fireBallSpawn;
     [SerializeField] private GameObject _fireBallPrefab;
     public AudioClip _fireBallSFX;
+    private bool _hasMana = true;
+    [SerializeField] private float _fireballCost = 1;
     //VIDA
+    [Header("Vida")]
     [SerializeField] private float _currentHealth;
     [SerializeField] private float _maxHealth = 20;
     [SerializeField] private Slider _healthBar;
     [SerializeField] private AudioClip _damage;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [Header("ConstantDamage")]
+    [SerializeField] private float _damageColdown = 1;
+    [Header("Mana")]
+    [SerializeField] private float _currentMana;
+    [SerializeField] private float _maxMana = 3;
+    [SerializeField] private Slider _manaBar;
     //MANAGERS
+    [Header("Managers")]
     [SerializeField] private SoundManager _soundManager;
 
     public Cofres _chests;
@@ -65,13 +81,15 @@ public class PlayerContol : MonoBehaviour
         _particleTransform = _particleSystem.transform;
         _particlePosition = _particleTransform.localPosition;
         _healthBar = GameObject.Find("PlayerHealth").GetComponent<Slider>();
+        _manaBar = GameObject.Find("PlayerMana").GetComponent<Slider>();
         _soundManager = GameObject.Find("BGM Manager").GetComponent<SoundManager>();
         _chests = GameObject.Find("cofre").GetComponent<Cofres>();
-        
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Start()
     {
+        _currentMana = _maxMana;
         _currentHealth = _maxHealth;
         _healthBar.maxValue = _maxHealth;
     }
@@ -104,9 +122,9 @@ public class PlayerContol : MonoBehaviour
 
         Movement();
 
-        if(Input.GetButtonDown("Fire1") && _canShoot)
+        if(Input.GetButtonDown("Fire1") && _hasMana)
         {
-            FireBall();
+            FireBall(_fireballCost);
         }
 
         if(Input.GetButtonDown("Fire2"))
@@ -127,6 +145,11 @@ public class PlayerContol : MonoBehaviour
         if(collider.gameObject.layer == 9)
         {
             _IsChestHere = true;
+        }
+
+        if(collider.gameObject.layer == 7)
+        {
+            Death();
         }
     }
 
@@ -236,12 +259,24 @@ public class PlayerContol : MonoBehaviour
         }
     }
 
-    void FireBall()
+    void FireBall(float cost)
     {
         Instantiate(_fireBallPrefab, _fireBallSpawn.position, _fireBallSpawn.rotation);
         _animator.SetTrigger("Shooting");
         _SFXSource.PlayOneShot(_fireBallSFX);
-    }
+
+        _currentMana -= cost;
+        _manaBar.value = _currentMana;
+
+        if(_currentMana == 0)
+        {
+            _hasMana = false;
+        }
+        else if(_currentMana > 0)
+        {
+            _hasMana = true;
+        }
+    }   
 
     public void TakeDamage(float damage)
     {
@@ -255,8 +290,24 @@ public class PlayerContol : MonoBehaviour
         }
     }
 
+    public bool canstantDamage = false;
+
+    public IEnumerator ConstantDamage(float damage)
+    {
+        yield return new WaitForSeconds(_damageColdown);
+
+        while(canstantDamage)
+        {
+            _currentHealth -= damage;
+            _healthBar.value = _currentHealth;
+            _SFXSource.PlayOneShot(_damage);
+            yield return new WaitForSeconds(_damageColdown);
+        }
+    }
+
     public void Death()
     {
+        _spriteRenderer.enabled = false;
         _rigidBody.gravityScale = 0;
         _boxCollider.enabled = false;
         Destroy(_groundSensor.gameObject);
@@ -271,5 +322,12 @@ public class PlayerContol : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_hitBoxPosition.position, _attackRadius);
+    }
+
+    public void RestoreMana()
+    {
+        _currentMana += 1;
+        _manaBar.value = _currentMana;
+        _hasMana = true;
     }
 }

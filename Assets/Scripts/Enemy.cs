@@ -45,12 +45,12 @@ public class Enemy : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 3 && _driection == -1)
+        if(collision.gameObject.layer == 3 && _driection == -1 || collision.gameObject.layer == 6 && _driection == -1)
         {
             _driection *= -1;
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
-        else if(collision.gameObject.layer == 3 && _driection == 1)
+        else if(collision.gameObject.layer == 3 && _driection == 1 || collision.gameObject.layer == 6 && _driection == 1)
         {
             _driection *= -1;
             transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -62,6 +62,27 @@ public class Enemy : MonoBehaviour
         if(collider.gameObject.CompareTag("Player"))
         {
             _playerControl.TakeDamage(_cuchilloDamage);
+            _playerControl.canstantDamage = true;
+            StartCoroutine(_playerControl.ConstantDamage(_cuchilloDamage));
+        }
+
+        if(collider.gameObject.layer == 8 && _driection == -1)
+        {
+            _driection *= -1;
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else if(collider.gameObject.layer == 8 && _driection == 1)
+        {
+            _driection *= -1;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        if(collider.gameObject.CompareTag("Player"))
+        {
+            _playerControl.canstantDamage = false;
         }
     }
 

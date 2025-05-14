@@ -6,7 +6,16 @@ public class Cofres : MonoBehaviour
 {
     public bool isChestOpen = false;
     public GameObject _diamantes;
-    public Transform _Spawner; 
+    public Transform _spawner; 
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _cofreSFX;
+    [SerializeField] private Animator _animator;
+
+    void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+        _animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -17,8 +26,13 @@ public class Cofres : MonoBehaviour
     }
     public void OpenChest()
     {
-        isChestOpen = true;
-        Instantiate(_diamantes, _Spawner.position, _Spawner.rotation);
-        Debug.Log("Cofre abierto");
+        if(isChestOpen == false)
+        {
+            _audioSource.PlayOneShot(_cofreSFX);
+            isChestOpen = true;
+            _animator.SetBool("IsOpen", true);
+            Instantiate(_diamantes, _spawner.position, _spawner.rotation);
+        }
+        
     }
 }
