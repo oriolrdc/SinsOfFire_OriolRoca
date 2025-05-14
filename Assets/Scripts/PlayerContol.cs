@@ -330,4 +330,10 @@ public class PlayerContol : MonoBehaviour
         _manaBar.value = _currentMana;
         _hasMana = true;
     }
+
+    public void RestoreHealth()
+    {
+        _currentHealth += 10;
+        _healthBar.value = _currentHealth;
+    }
 }

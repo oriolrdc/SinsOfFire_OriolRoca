@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PocionMana : MonoBehaviour
+public class PocionVida : MonoBehaviour
 {
     [SerializeField] private PolygonCollider2D _polyCollider;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private PlayerContol _playerControl;
     [SerializeField] private AudioSource _audioSource;
-    public AudioClip manaSFX;
+    public AudioClip pocionVidaSFX;
 
     void Awake()
     {
@@ -23,8 +23,8 @@ public class PocionMana : MonoBehaviour
     {
         if(collider.gameObject.CompareTag("Player"))
         {
-            _playerControl.RestoreMana();
-            _audioSource.PlayOneShot(manaSFX);
+            _playerControl.RestoreHealth();
+            _audioSource.PlayOneShot(pocionVidaSFX);
             Death();
         }
     }
@@ -35,6 +35,4 @@ public class PocionMana : MonoBehaviour
         _polyCollider.enabled = false;
         Destroy(gameObject, 1.5f);
     }
-
-
 }
