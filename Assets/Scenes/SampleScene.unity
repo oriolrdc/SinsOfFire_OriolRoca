@@ -63321,17 +63321,18 @@ MonoBehaviour:
   _footStepsSFX: {fileID: 8300000, guid: 9db6c7b8565b5ec48b7e88332e29cb8e, type: 3}
   _dashSFX: {fileID: 8300000, guid: 5dcc4ef664f608e48b0ccd756f374476, type: 3}
   _jumpSFX: {fileID: 8300000, guid: f4695c6ac8021da4d8ce647b6b2df578, type: 3}
-  _attackDamage: 10
+  _attackDamage: 2.5
   _attackRadius: 1.5
   _hitBoxPosition: {fileID: 381395840}
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 64
   _slash: {fileID: 8300000, guid: ac01fd861aed12145a6a6449a97c7fd5, type: 3}
+  _attackColdown: 0.1
   _fireBallSpawn: {fileID: 580588081}
   _fireBallPrefab: {fileID: 6811489484422114807, guid: becda09ccbcce7643b9e3203b84fdf9c, type: 3}
   _fireBallSFX: {fileID: 8300000, guid: dbf0d4feb5dd0334f9f3e3ba26a4dd9a, type: 3}
-  _fireballCost: 1
+  _fireballCost: 0.35
   _currentHealth: 0
   _maxHealth: 1
   _healthBar: {fileID: 0}
@@ -63339,7 +63340,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 0}
   _damageColdown: 1
   _currentMana: 0
-  _maxMana: 3
+  _maxMana: 1
   _manaBar: {fileID: 0}
   _soundManager: {fileID: 0}
   _chests: {fileID: 0}
@@ -103131,10 +103132,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 649988472}
     m_Modifications:
-    - target: {fileID: 1967205088273424345, guid: c272eae87ff387b4e8f6f73d2c4ecb94, type: 3}
-      propertyPath: _cuchilloDamage
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 2445701294530044499, guid: c272eae87ff387b4e8f6f73d2c4ecb94, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
