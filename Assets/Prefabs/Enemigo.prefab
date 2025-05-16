@@ -105,9 +105,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4121559308455055181}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -94.176285, y: 8.340628, z: 0.30419126}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 2.3, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7473631946120453238}
@@ -134,7 +134,7 @@ MonoBehaviour:
   _healthBar: {fileID: 0}
   _triggerCuchillo: {fileID: 0}
   _playerControl: {fileID: 0}
-  _cuchilloDamage: 4
+  _cuchilloDamage: 0.4
 --- !u!212 &7288556743165001191
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     //CUCHILLO
     [SerializeField] private PolygonCollider2D _triggerCuchillo;
     [SerializeField] private PlayerContol _playerControl;
-    [SerializeField] private float _cuchilloDamage = 4;
+    [SerializeField] private float _cuchilloDamage = 0.35f;
 
     void Awake()
     {

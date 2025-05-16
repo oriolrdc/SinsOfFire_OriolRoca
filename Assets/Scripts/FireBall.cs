@@ -7,7 +7,7 @@ public class FireBall : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private SpriteRenderer _spriteRenderer;
     private float _fireBallSpeed = 10;
-    private float _fireBallDamage = 2;
+    private float _fireBallDamage = 5;
     private Animator _animator;
     
     void Awake()
