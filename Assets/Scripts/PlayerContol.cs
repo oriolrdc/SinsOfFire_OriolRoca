@@ -45,10 +45,7 @@ public class PlayerContol : MonoBehaviour
     [SerializeField] private Transform _hitBoxPosition;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private AudioClip _slash;
-    [Header("TimerAtaque")]
-    [SerializeField] private float _timer;
     [SerializeField] private float _attackColdown = 1;
-    [SerializeField] private bool _timerFinished = false;
     //AMERICAN
     [Header("Disparo")]
     [SerializeField] private Transform _fireBallSpawn;
@@ -145,11 +142,6 @@ public class PlayerContol : MonoBehaviour
             _chests.OpenChest();
         }
 
-        if (_timerFinished == true)
-        {
-            _timer = 0;
-            _timerFinished = false;
-        }
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -269,19 +261,7 @@ public class PlayerContol : MonoBehaviour
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             enemyScript.TakeDamage(_attackDamage);
         }
-        _timerFinished = true;
     }
-    /*void NormalAtack()
-    {
-        _timer += Time.deltaTime;
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(_hitBoxPosition.position, _attackRadius, _enemyLayer);
-        _SFXSource.PlayOneShot(_slash);
-
-        if(_timer >= _attackColdown)
-        {
-            
-        }
-    }*/
 
     void FireBall(float cost)
     {
