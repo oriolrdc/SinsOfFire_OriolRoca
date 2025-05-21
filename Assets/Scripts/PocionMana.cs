@@ -35,6 +35,4 @@ public class PocionMana : MonoBehaviour
         _polyCollider.enabled = false;
         Destroy(gameObject, 1.5f);
     }
-
-
 }
