@@ -126,15 +126,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 0}
-  _driection: 1
+  _driection: 0
   _enemySpeed: 2
-  _actualDirection: 1
+  _actualDirection: -1
   _currentHealth: 0
   _maxHealth: 5
   _healthBar: {fileID: 0}
   _triggerCuchillo: {fileID: 0}
   _playerControl: {fileID: 0}
   _cuchilloDamage: 0.4
+  _gameManager: {fileID: 0}
 --- !u!212 &7288556743165001191
 SpriteRenderer:
   m_ObjectHideFlags: 0
