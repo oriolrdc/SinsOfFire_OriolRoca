@@ -46,6 +46,7 @@ public class PlayerContol : MonoBehaviour
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private AudioClip _slash;
     [SerializeField] private float _attackColdown = 1;
+    [SerializeField] private bool _canAttack = true;
     //AMERICAN
     [Header("Disparo")]
     [SerializeField] private Transform _fireBallSpawn;
@@ -84,7 +85,6 @@ public class PlayerContol : MonoBehaviour
         _healthBar = GameObject.Find("VidaBarra").GetComponent<Image>();
         _manaBar = GameObject.Find("ManaBarra").GetComponent<Image>();
         _soundManager = GameObject.Find("BGM Manager").GetComponent<SoundManager>();
-        _chests = GameObject.Find("cofre").GetComponent<Cofres>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -132,7 +132,11 @@ public class PlayerContol : MonoBehaviour
 
         if(Input.GetButtonDown("Fire2"))
         {
-            NormalAtack();
+            if(_canAttack)
+            {
+                _animator.SetTrigger("IsAttacking");
+                StartCoroutine(AttackColdown());
+            }
         }
 
         FootStepsSound();
@@ -149,6 +153,7 @@ public class PlayerContol : MonoBehaviour
         if(collider.gameObject.layer == 9)
         {
             _IsChestHere = true;
+            _chests = collider.gameObject.GetComponent<Cofres>();
         }
 
         if(collider.gameObject.layer == 7)
@@ -254,13 +259,19 @@ public class PlayerContol : MonoBehaviour
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(_hitBoxPosition.position, _attackRadius, _enemyLayer);
         _SFXSource.PlayOneShot(_slash);
-        _animator.SetTrigger("IsAttacking");
         
         foreach(Collider2D enemy in enemies)
         {
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             enemyScript.TakeDamage(_attackDamage);
         }
+    }
+
+    IEnumerator AttackColdown()
+    {
+        _canAttack = false;
+        yield return new WaitForSeconds(_attackColdown);
+        _canAttack = true;
     }
 
     void FireBall(float cost)

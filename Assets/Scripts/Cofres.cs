@@ -5,7 +5,7 @@ using UnityEngine;
 public class Cofres : MonoBehaviour
 {
     public bool isChestOpen = false;
-    public GameObject _diamantes;
+    public GameObject _pocion;
     public Transform _spawner; 
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _cofreSFX;
@@ -31,7 +31,7 @@ public class Cofres : MonoBehaviour
             _audioSource.PlayOneShot(_cofreSFX);
             isChestOpen = true;
             _animator.SetBool("IsOpen", true);
-            Instantiate(_diamantes, _spawner.position, _spawner.rotation);
+            Instantiate(_pocion, _spawner.position, _spawner.rotation);
         }
         
     }

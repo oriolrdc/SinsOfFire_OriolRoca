@@ -21,9 +21,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private PolygonCollider2D _triggerCuchillo;
     [SerializeField] private PlayerContol _playerControl;
     [SerializeField] private float _cuchilloDamage = 0.35f;
+    //MANAGERS
+    [SerializeField] private GameManager _gameManager;
 
     void Awake()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _triggerCuchillo = GetComponent<PolygonCollider2D>();
@@ -102,6 +105,7 @@ public class Enemy : MonoBehaviour
         _currentHealth -= damage;
 
         _healthBar.value = _currentHealth;
+        Debug.Log(_currentHealth);
 
         if(_currentHealth <= 0)
         {
@@ -111,6 +115,7 @@ public class Enemy : MonoBehaviour
 
     public void Death()
     {
+        _gameManager.Kills();
         _driection = 0;
         _rigidBody.gravityScale = 0;
         _boxCollider.enabled = false;

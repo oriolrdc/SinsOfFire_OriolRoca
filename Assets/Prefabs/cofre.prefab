@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isChestOpen: 0
-  _diamantes: {fileID: 7992563569975246324, guid: 5e77e4fc8ee709445a053788a5db151d, type: 3}
+  _pocion: {fileID: 0}
   _spawner: {fileID: 5398620460446874734}
   _audioSource: {fileID: 0}
   _cofreSFX: {fileID: 8300000, guid: 1e179177833f9b9478598c8de68de2be, type: 3}
