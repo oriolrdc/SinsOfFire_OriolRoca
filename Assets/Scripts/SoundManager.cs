@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
@@ -33,5 +34,6 @@ public class SoundManager : MonoBehaviour
     public void GameOver()
     {
         _audioSource.Pause();
+        SceneManager.LoadScene(2);
     }
 }
