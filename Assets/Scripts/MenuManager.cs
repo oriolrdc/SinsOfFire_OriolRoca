@@ -12,7 +12,14 @@ public class MenuManager : MonoBehaviour
     
     void Start()
     {
+        try
+        {
         controlesCanvas.SetActive(false);
+        }
+        catch
+        {
+            Debug.Log("NoHay");
+        }
     }
 
     public void Play()
@@ -27,6 +34,7 @@ public class MenuManager : MonoBehaviour
 
     public void MainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
 }

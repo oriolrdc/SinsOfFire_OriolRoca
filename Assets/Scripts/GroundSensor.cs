@@ -23,7 +23,7 @@ public class GroundSensor : MonoBehaviour
 
         if(collider.gameObject.layer == 7)
         {
-            _playerControl.Death();
+            _playerControl.DeathByVoid();
         }
     }
 

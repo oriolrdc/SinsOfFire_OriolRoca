@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip _BGM;
     [SerializeField] private AudioClip _GameOver;
     [SerializeField] private GameManager _gameManager;
+    public float delay = 5;
 
     void Awake()
     {
@@ -33,10 +34,12 @@ public class SoundManager : MonoBehaviour
         _audioSource.Pause();
     }
 
-    public void GameOver()
+    public IEnumerator GameOver()
     {
-        _audioSource.Pause();
+        _audioSource.Stop();
+        yield return new WaitForSeconds(delay);
         SceneManager.LoadScene(2);
+
     }
 
     public void PauseBGM()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerContol : MonoBehaviour
 {
@@ -167,7 +168,7 @@ public class PlayerContol : MonoBehaviour
 
         if(collider.gameObject.layer == 7)
         {
-            Death();
+            DeathByVoid();
         }
     }
 
@@ -309,7 +310,7 @@ public class PlayerContol : MonoBehaviour
 
         if(_currentHealth <= 0)
         {
-            Death();
+            DeathByEnemy();
         }
     }
 
@@ -327,26 +328,41 @@ public class PlayerContol : MonoBehaviour
             
             if(_currentHealth <= 0)
             {
-                Death();
+                DeathByEnemy();
             }
 
             yield return new WaitForSeconds(_damageColdown);
         }
     }
 
-    public void Death()
+    public void DeathByVoid()
     {
-        _animator.SetTrigger("IsDeath");
         _spriteRenderer.enabled = false;
         _rigidBody.gravityScale = 0;
+        _rigidBody.velocity = Vector2.zero;
         _boxCollider.enabled = false;
         Destroy(_groundSensor.gameObject);
         inputHorizontal = 0;
         _audioSource.Stop();
         _SFXSource.PlayOneShot(_gameOverSFX);
-        _soundManager.GameOver();
+        StartCoroutine(_soundManager.GameOver());
         _gameManager.isPlaying = false;
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, 10);
+    }
+
+    public void DeathByEnemy()
+    {
+        _animator.SetTrigger("IsDeath");
+        _rigidBody.gravityScale = 0;
+        _rigidBody.velocity = Vector2.zero;
+        _boxCollider.enabled = false;
+        Destroy(_groundSensor.gameObject);
+        inputHorizontal = 0;
+        _audioSource.Stop();
+        _SFXSource.PlayOneShot(_gameOverSFX);
+        StartCoroutine(_soundManager.GameOver());
+        _gameManager.isPlaying = false;
+        Destroy(gameObject, 10);
     }
 
     void OnDrawGizmos()
