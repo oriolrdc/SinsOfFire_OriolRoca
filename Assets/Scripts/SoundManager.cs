@@ -8,9 +8,11 @@ public class SoundManager : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _BGM;
     [SerializeField] private AudioClip _GameOver;
+    [SerializeField] private GameManager _gameManager;
 
     void Awake()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _audioSource = GetComponent<AudioSource>();
     }
 
@@ -35,5 +37,17 @@ public class SoundManager : MonoBehaviour
     {
         _audioSource.Pause();
         SceneManager.LoadScene(2);
+    }
+
+    public void PauseBGM()
+    {
+        if(_gameManager.isPaused)
+        {
+            _audioSource.Pause();
+        }
+        else
+        {
+            _audioSource.Play();
+        }
     }
 }

@@ -14,7 +14,6 @@ public class PlayerContol : MonoBehaviour
     //Salto
     private GroundSensor _groundSensor;
     public float jumpForce = 10;
-    
     //Dash
     [Header("Dash")]
     [SerializeField] private float _dashForce = 20;
@@ -70,12 +69,14 @@ public class PlayerContol : MonoBehaviour
     //MANAGERS
     [Header("Managers")]
     [SerializeField] private SoundManager _soundManager;
+    [SerializeField] private GameManager _gameManager;
 
     public Cofres _chests;
     public bool _IsChestHere;
 
     void Awake()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _groundSensor = GetComponentInChildren<GroundSensor>();
         _animator = GetComponent<Animator>();
@@ -94,11 +95,19 @@ public class PlayerContol : MonoBehaviour
         _currentHealth = _maxHealth;
         _healthBar.fillAmount = _maxHealth;
         _manaBar.fillAmount = _maxMana;
-
     }
 
     void Update()
     {
+        if(!_gameManager.isPlaying)
+        {
+            return;   
+        }
+        if(_gameManager.isPaused)
+        {
+            return;
+        }
+
         _animator.SetBool("IsJumping", !_groundSensor.isGrounded);
 
         //DASH
@@ -336,6 +345,7 @@ public class PlayerContol : MonoBehaviour
         _audioSource.Stop();
         _SFXSource.PlayOneShot(_gameOverSFX);
         _soundManager.GameOver();
+        _gameManager.isPlaying = false;
         Destroy(gameObject, 0.5f);
     }
 

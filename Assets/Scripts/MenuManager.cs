@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
 
     public GameObject controlesCanvas;
     public GameObject menuPricipalCanvas;
+    public GameManager _gameManager;
     
     void Start()
     {

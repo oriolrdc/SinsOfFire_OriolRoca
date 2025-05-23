@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 3623639}
   - component: {fileID: 3623641}
   - component: {fileID: 3623640}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9311,7 +9311,7 @@ GameObject:
   - component: {fileID: 587054986}
   - component: {fileID: 587054988}
   - component: {fileID: 587054987}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ControlesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17683,7 +17683,7 @@ GameObject:
   - component: {fileID: 816598662}
   - component: {fileID: 816598661}
   - component: {fileID: 816598660}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PauseCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20315,7 +20315,7 @@ GameObject:
   - component: {fileID: 965790961}
   - component: {fileID: 965790963}
   - component: {fileID: 965790962}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ContinuarText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21232,7 +21232,7 @@ GameObject:
   - component: {fileID: 1001593236}
   - component: {fileID: 1001593238}
   - component: {fileID: 1001593237}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SalirText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21428,6 +21428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _BGM: {fileID: 8300000, guid: 8b93cc0e5fa76d94eb01c5bc17784a42, type: 3}
   _GameOver: {fileID: 8300000, guid: 410e6810e269c8741adc6c4380273676, type: 3}
+  _gameManager: {fileID: 0}
 --- !u!4 &1003205380
 Transform:
   m_ObjectHideFlags: 0
@@ -21790,7 +21791,7 @@ GameObject:
   - component: {fileID: 1028153704}
   - component: {fileID: 1028153706}
   - component: {fileID: 1028153705}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fondo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24652,7 +24653,7 @@ GameObject:
   - component: {fileID: 1161548357}
   - component: {fileID: 1161548359}
   - component: {fileID: 1161548358}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25747,6 +25748,7 @@ MonoBehaviour:
   _maxMana: 1
   _manaBar: {fileID: 0}
   _soundManager: {fileID: 0}
+  _gameManager: {fileID: 0}
   _chests: {fileID: 0}
   _IsChestHere: 0
   canstantDamage: 0
@@ -28303,7 +28305,7 @@ GameObject:
   - component: {fileID: 1403770128}
   - component: {fileID: 1403770130}
   - component: {fileID: 1403770129}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: OpcinesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30649,6 +30651,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46076cb4a793e6740b6f990233523d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlaying: 1
+  isPaused: 0
+  _pauseCanvas: {fileID: 816598659}
   _diamonds: 0
   diamondsText: {fileID: 2131725653}
   _Kills: 0
@@ -31582,7 +31587,7 @@ GameObject:
   - component: {fileID: 1695030024}
   - component: {fileID: 1695030023}
   - component: {fileID: 1695030022}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31652,7 +31657,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1001593237}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1700409078}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: MainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1695030023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31691,6 +31708,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695030020}
   m_CullTransparentMesh: 1
+--- !u!1 &1700409077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1700409079}
+  - component: {fileID: 1700409078}
+  m_Layer: 0
+  m_Name: MenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1700409078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700409077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a58160104b4d18468598f2afbd6c64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlesCanvas: {fileID: 0}
+  menuPricipalCanvas: {fileID: 0}
+  _gameManager: {fileID: 1604917536}
+--- !u!4 &1700409079
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700409077}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.1005836, y: -2.0702446, z: -0.054157592}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1702715996
 GameObject:
   m_ObjectHideFlags: 0
@@ -35143,7 +35207,7 @@ GameObject:
   - component: {fileID: 1887877616}
   - component: {fileID: 1887877615}
   - component: {fileID: 1887877614}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ContinuarButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35214,10 +35278,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 816598659}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1604917536}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: Unpause
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -35480,7 +35544,7 @@ GameObject:
   - component: {fileID: 1895249159}
   - component: {fileID: 1895249158}
   - component: {fileID: 1895249157}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ControlesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35550,7 +35614,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 587054987}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1895249158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36866,7 +36942,7 @@ GameObject:
   - component: {fileID: 1985881161}
   - component: {fileID: 1985881160}
   - component: {fileID: 1985881159}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: OpcionesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37812,7 +37888,7 @@ GameObject:
   - component: {fileID: 2054387383}
   - component: {fileID: 2054387385}
   - component: {fileID: 2054387384}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38670,7 +38746,7 @@ GameObject:
   - component: {fileID: 2097682783}
   - component: {fileID: 2097682785}
   - component: {fileID: 2097682784}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39666,18 +39742,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemigo
       objectReference: {fileID: 0}
-    - target: {fileID: 7116398514418159375, guid: c272eae87ff387b4e8f6f73d2c4ecb94, type: 3}
-      propertyPath: m_Color.b
-      value: 0.2268908
-      objectReference: {fileID: 0}
-    - target: {fileID: 7116398514418159375, guid: c272eae87ff387b4e8f6f73d2c4ecb94, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7116398514418159375, guid: c272eae87ff387b4e8f6f73d2c4ecb94, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7497764511669056602, guid: c272eae87ff387b4e8f6f73d2c4ecb94, type: 3}
       propertyPath: m_LocalPosition.x
       value: -94.176285
@@ -39718,18 +39782,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8664705482071445285, guid: c272eae87ff387b4e8f6f73d2c4ecb94, type: 3}
-      propertyPath: m_Color.b
-      value: 0.10588236
-      objectReference: {fileID: 0}
-    - target: {fileID: 8664705482071445285, guid: c272eae87ff387b4e8f6f73d2c4ecb94, type: 3}
-      propertyPath: m_Color.g
-      value: 0.31764707
-      objectReference: {fileID: 0}
-    - target: {fileID: 8664705482071445285, guid: c272eae87ff387b4e8f6f73d2c4ecb94, type: 3}
-      propertyPath: m_Color.r
-      value: 0.043137256
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39742,6 +39794,7 @@ SceneRoots:
   - {fileID: 170282070}
   - {fileID: 1003205380}
   - {fileID: 1604917537}
+  - {fileID: 1700409079}
   - {fileID: 1845666241}
   - {fileID: 984499599}
   - {fileID: 816598663}
