@@ -49,12 +49,12 @@ public class WinController : MonoBehaviour
 
     public void SumarDiamantes()
     {
-        _diamantesTXT.text = "00" + _gameManager._diamonds.ToString();
+        _diamantesTXT.text = "0" + _gameManager._diamonds.ToString();
     }
 
     public void SumarEnemigos()
     {
-        _enemigosTXT.text = "00" + _gameManager._Kills.ToString();
+        _enemigosTXT.text = "0" + _gameManager._Kills.ToString();
     }
 
 }

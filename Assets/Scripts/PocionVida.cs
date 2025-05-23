@@ -33,6 +33,6 @@ public class PocionVida : MonoBehaviour
     {
         _spriteRenderer.enabled = false;
         _polyCollider.enabled = false;
-        Destroy(gameObject, 1.5f);
+        Destroy(gameObject, 2.5f);
     }
 }

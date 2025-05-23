@@ -23,9 +23,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _cuchilloDamage = 0.35f;
     //MANAGERS
     [SerializeField] private GameManager _gameManager;
+    //AUDIO
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _hitSFX;
+    [SerializeField] private AudioClip _deathSFX;
 
     void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
         _animator = GetComponent<Animator>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -103,9 +108,8 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
-
         _healthBar.value = _currentHealth;
-        Debug.Log(_currentHealth);
+        _audioSource.PlayOneShot(_hitSFX);
 
         if(_currentHealth <= 0)
         {
@@ -116,6 +120,7 @@ public class Enemy : MonoBehaviour
     public void Death()
     {
         _animator.SetTrigger("IsDeath");
+        _audioSource.PlayOneShot(_deathSFX);
         _gameManager.Kills();
         _driection = 0;
         _rigidBody.gravityScale = 0;

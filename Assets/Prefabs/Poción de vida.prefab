@@ -51,7 +51,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 0}
   _playerControl: {fileID: 0}
   _audioSource: {fileID: 0}
-  pocionVidaSFX: {fileID: 8300000, guid: c45b417967e7249488c6e45ef4811168, type: 3}
+  pocionVidaSFX: {fileID: 8300000, guid: 3f863664dbe17454c9a92d17473653da, type: 3}
 --- !u!212 &1856775177139080479
 SpriteRenderer:
   m_ObjectHideFlags: 0

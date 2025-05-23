@@ -9,6 +9,9 @@ public class Key : MonoBehaviour
     private PlayerContol _playerControl;
     private BoxCollider2D _boxCollider;
     public GameObject winCanvas;
+    public AudioSource _audioSource;
+    public AudioClip _winSFX;
+    public float _delay = 5;
 
     void Awake()
     {
@@ -27,7 +30,17 @@ public class Key : MonoBehaviour
         if(collider.gameObject.CompareTag("Player"))
         {
             _soundManager.Win();
-            winCanvas.SetActive(true);
+            StartCoroutine(WinRoutine());
+            _playerControl.PlayerWin();
+            StartCoroutine(_soundManager.WinCavas());
         }
+    }
+
+    public IEnumerator WinRoutine()
+    {
+        _audioSource.PlayOneShot(_winSFX);
+        yield return new WaitForSeconds(_delay);
+        winCanvas.SetActive(true);
+
     }
 }

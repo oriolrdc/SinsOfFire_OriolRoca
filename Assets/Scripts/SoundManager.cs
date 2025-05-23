@@ -10,6 +10,11 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip _GameOver;
     [SerializeField] private GameManager _gameManager;
     public float delay = 5;
+    public float delay2 = 2;
+    public float delay3 = 3.5f;
+    public float delay4 = 14;
+    public AudioClip _winCanvas;
+    public AudioClip _missionComplete;
 
     void Awake()
     {
@@ -52,5 +57,16 @@ public class SoundManager : MonoBehaviour
         {
             _audioSource.Play();
         }
+    }
+
+    public IEnumerator WinCavas()
+    {
+        yield return new WaitForSeconds(delay2);
+        _audioSource.clip = _winCanvas;
+        _audioSource.Play();
+        yield return new WaitForSeconds(delay3);
+        _audioSource.PlayOneShot(_missionComplete);
+        yield return new WaitForSeconds(delay4);
+        SceneManager.LoadScene(0);
     }
 }

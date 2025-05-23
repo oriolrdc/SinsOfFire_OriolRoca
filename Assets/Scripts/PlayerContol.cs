@@ -383,4 +383,16 @@ public class PlayerContol : MonoBehaviour
         _currentHealth += 0.5f;
         _healthBar.fillAmount = _currentHealth;
     }
+
+    public void PlayerWin()
+    {
+        _animator.SetTrigger("Wined");
+        _rigidBody.gravityScale = 0;
+        _rigidBody.velocity = Vector2.zero;
+        _boxCollider.enabled = false;
+        Destroy(_groundSensor.gameObject);
+        inputHorizontal = 0;
+        _audioSource.Stop();
+        _gameManager.isPlaying = false;
+    }
 }

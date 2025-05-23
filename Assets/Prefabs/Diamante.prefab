@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c55383a0ff9e249a0dc0fe750564d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diamondSFX: {fileID: 8300000, guid: a560b11670059a14fa042b8c9e66385d, type: 3}
+  diamondSFX: {fileID: 8300000, guid: 36b91dddfef0b504fa72b441234d8f18, type: 3}
 --- !u!212 &5134139380465574284
 SpriteRenderer:
   m_ObjectHideFlags: 0
