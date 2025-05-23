@@ -5,15 +5,10 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private int _diamonds = 0;
+    public int _diamonds = 0;
     public Text diamondsText;
-    private int _Kills = 0;
+    public int _Kills = 0;
     public Text KillsText;
-
-    void Awake()
-    {
-
-    }
 
     void Start()
     {

@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
 
     public GameObject controlesCanvas;
     public GameObject menuPricipalCanvas;
-
+    
     void Start()
     {
         controlesCanvas.SetActive(false);
