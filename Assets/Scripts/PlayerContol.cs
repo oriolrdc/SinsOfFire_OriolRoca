@@ -327,6 +327,7 @@ public class PlayerContol : MonoBehaviour
 
     public void Death()
     {
+        _animator.SetTrigger("IsDeath");
         _spriteRenderer.enabled = false;
         _rigidBody.gravityScale = 0;
         _boxCollider.enabled = false;

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    //SPRITES
-    [SerializeField] SpriteRenderer _spriteRenderer;
+    //ANIMACIONES
+    [SerializeField] Animator _animator;
     //MOVIMIENTO
     private Rigidbody2D _rigidBody;
     private BoxCollider2D _boxCollider;
@@ -26,13 +26,13 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
+        _animator = GetComponent<Animator>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _triggerCuchillo = GetComponent<PolygonCollider2D>();
         _playerControl = GameObject.Find("personaje").GetComponent<PlayerContol>();
         _healthBar = GetComponentInChildren<Slider>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Start()
@@ -115,13 +115,13 @@ public class Enemy : MonoBehaviour
 
     public void Death()
     {
+        _animator.SetTrigger("IsDeath");
         _gameManager.Kills();
         _driection = 0;
         _rigidBody.gravityScale = 0;
         _boxCollider.enabled = false;
         _triggerCuchillo.enabled = false;
-        _spriteRenderer.enabled = false;
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 0.7f);
     }
 
     
