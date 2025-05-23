@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Key : MonoBehaviour
 {
     private SoundManager _soundManager;
     private PlayerContol _playerControl;
     private BoxCollider2D _boxCollider;
+    public GameObject winCanvas;
 
     void Awake()
     {
@@ -15,11 +17,17 @@ public class Key : MonoBehaviour
         _boxCollider = GetComponent<BoxCollider2D>();
     }
 
+    void Start()
+    {
+        winCanvas.SetActive(false);
+    }
+
     void OnTriggerEnter2D(Collider2D collider)
     {
         if(collider.gameObject.CompareTag("Player"))
         {
             _soundManager.Win();
+            winCanvas.SetActive(true);
         }
     }
 }

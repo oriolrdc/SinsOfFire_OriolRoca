@@ -19287,6 +19287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c3e41753415c6645800c3113b262c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winCanvas: {fileID: 642622527}
 --- !u!1 &906899466
 GameObject:
   m_ObjectHideFlags: 0
@@ -23847,7 +23848,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 000
+  m_Text: 
 --- !u!222 &1131405578
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32232,7 +32233,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 000
+  m_Text: 
 --- !u!222 &1767753472
 CanvasRenderer:
   m_ObjectHideFlags: 0
